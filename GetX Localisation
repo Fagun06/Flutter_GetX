@@ -1,0 +1,83 @@
+main
+import 'package:flutter/cupertino.dart';
+import 'package:getx/langView.dart';
+
+void main() {
+  runApp(Langview());
+}
+LandView
+import 'package:flutter/material.dart';
+import 'package:get/get_instance/get_instance.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:get/route_manager.dart';
+import 'package:getx/controller/myController.dart';
+import 'package:getx/strings.dart';
+
+class Langview extends StatelessWidget {
+
+   Langview({super.key});
+   
+  var controller = Get.put(LangController());
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      translations: Strings(),
+      locale: const Locale('en','US'),
+      fallbackLocale: Locale('en','US'),
+      home:Scaffold(
+        appBar: AppBar(
+          title: const Text("localization"),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "h".tr,
+                style: const TextStyle(fontSize: 30),
+              ),
+              ElevatedButton(onPressed: () {
+                  controller.changeLocale("hi","IN");
+              }, child: Text("hindi")),
+              ElevatedButton(onPressed: () {
+                controller.changeLocale("en","US");
+              }, child: Text("Engilish")),
+              ElevatedButton(onPressed: () {
+                controller.changeLocale("fr","US");
+              }, child: Text("French")),
+
+            ],
+          ),
+        ),
+      )
+    );
+  }
+
+}
+stirng
+import 'package:get/get_navigation/get_navigation.dart';
+
+class Strings extends Translations {
+  @override
+  Map<String,Map<String,String>> get keys => {
+    'en_US' : {'h' : 'How are you!'},
+    'hi_IN' : {'h' : 'keya how ap'},
+    'fr_FR' : {'h' : 'dfs fff sfgg'},
+  };
+}
+
+MyController
+import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
+
+class LangController extends GetxController{
+
+  changeLocale(String langCode, String countryCode) {
+    var locale = Locale(langCode,countryCode);
+    Get.updateLocale(locale);
+  }
+  
+}
