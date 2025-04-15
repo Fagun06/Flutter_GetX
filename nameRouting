@@ -1,0 +1,156 @@
+this is main file
+import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:getx/pages/firstPage.dart';
+import 'package:getx/pages/secondPage.dart';
+import 'package:getx/pages/thirdPage.dart';
+import 'package:getx/pages/unknownpage.dart';
+
+void main ()
+{
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget 
+{
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+     return GetMaterialApp(
+        initialRoute: "first",
+        debugShowCheckedModeBanner: false,
+        defaultTransition: Transition.leftToRight,
+        getPages: [
+          GetPage(name:"/first",page: ()=>Firstpage()),
+          GetPage(name: "/second",page: ()=>Secondpage()),
+          GetPage(name: "/third", page: ()=>Thirdpage())
+        ],
+        unknownRoute: GetPage(name: "/unkown", page: ()=>Unknownpage()),
+     );
+  }
+  
+}
+
+//firstPage
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+class Firstpage extends StatelessWidget {
+
+  const Firstpage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(onPressed: () {
+              //Get.offNamed('/second');
+              //Get.offAllNamed('/second');
+              Get.toNamed("/second?a=1&b=2");
+            }, child: Text('Navigate to second')),
+        
+        
+            ElevatedButton(onPressed: () {}, child: Text("Back"))
+          ],
+        ),
+      ),
+    );
+  }
+
+}
+
+//second page
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+class Secondpage extends StatelessWidget
+{
+  const Secondpage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+          child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(Get.parameters["a"]??""),
+            ElevatedButton(onPressed: () {
+               Get.toNamed("/third");
+            }, child: Text('Navigate to Third')),
+          
+          
+            ElevatedButton(onPressed: () {
+              Get.back();
+            }, child: Text("Back"))
+          ],
+                ),
+        ),
+    );
+  }
+  
+}
+thirdpage
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+class Thirdpage extends StatelessWidget
+{
+  const Thirdpage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+          child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            
+            ElevatedButton(onPressed: () {
+              Get.back();
+            }, child: Text("Back"))
+          ],
+                ),
+        ),
+    );
+  }
+  
+}
+
+Unknownpagwe
+
+
+import 'package:flutter/material.dart';
+
+class Unknownpage extends StatelessWidget{
+  const Unknownpage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            children: [
+              Container(
+                color:  Colors.yellow,
+                width: 100,
+                height: 100,
+              )
+            ],
+          ),
+        ),
+      );
+  }
+
+}
+
