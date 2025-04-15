@@ -1,0 +1,74 @@
+main folder
+import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:getx/pages/firstPage.dart';
+import 'package:getx/pages/secondPage.dart';
+import 'package:getx/pages/thirdPage.dart';
+import 'package:getx/pages/unknownpage.dart';
+
+void main ()
+{
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget 
+{
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+     return GetMaterialApp(
+        initialRoute: "first",
+        debugShowCheckedModeBanner: false,
+        defaultTransition: Transition.leftToRight,
+        getPages: [
+          GetPage(name:"/first",page: ()=>Firstpage()),
+          GetPage(name: "/second",page: ()=>Secondpage()),
+          GetPage(name: "/third", page: ()=>Thirdpage())
+        ],
+        unknownRoute: GetPage(name: "/unkown", page: ()=>Unknownpage()),
+     );
+  }
+  
+}
+
+first page
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'package:getx/controller/appcontroller.dart';
+
+
+class Firstpage extends StatelessWidget {
+
+  final Appcontroller controller = Get.put(Appcontroller());
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+             Obx(() {
+            return Center(
+              child: Text(
+                "${controller.count}", 
+                style: TextStyle(fontSize: 30),
+              ),
+            );
+          }),
+          ElevatedButton(onPressed: () {
+              controller.count++;
+          }, child: Text("Increment",style: TextStyle(fontSize: 21,color: Colors.blue),))
+        ],
+        
+      )
+    );
+  }
+
+}
